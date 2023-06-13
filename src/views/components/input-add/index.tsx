@@ -1,13 +1,14 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { IInputAddProps } from '../../../types/types'
 import styles from './index.module.scss'
 
 export const InputAdd: React.FC<IInputAddProps> = ({ onAdd }) => {
   const [inputValue, setInputValue] = useState('');
-  const addNewTask = useCallback(() => {
+  const addNewTask = () => {
     onAdd(inputValue);
     setInputValue('');
-  }, [inputValue, onAdd])
+    console.log(inputValue);
+  };
 
   return (
     <div className={styles.inputAdd}>
@@ -15,6 +16,7 @@ export const InputAdd: React.FC<IInputAddProps> = ({ onAdd }) => {
         type="text"
         className={styles.inputAddTitle}
         value={inputValue}
+        placeholder="type here..."
         onChange={(evt) => setInputValue(evt.target.value)}
         onKeyDown={(evt) => {
           if (evt.key === 'Enter') {
