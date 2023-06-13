@@ -6,7 +6,7 @@ interface ITask {
 
 interface IToDoStore {
   tasks: ITask[]
-  storeTasks: ITask[]
+  copyTasks: ITask[]
   createTask: (title: string) => void
   updateTask: (id: string, title: string) => void
   removeTask: (id: string) => void
