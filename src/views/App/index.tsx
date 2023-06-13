@@ -5,7 +5,7 @@ import { ShowTasks } from '../components/show-tasks';
 import styles from './index.module.scss'
 
 export const App: React.FC = () => {
-  const [tasks, createTask, removeTask, updateTask, fulfillTask, notFulfilledTask, showFulfilledTasks, showAllTasks, showUnfinishedTasks, storeTasks] = useToDoStore((state) => [
+  const [tasks, createTask, removeTask, updateTask, fulfillTask, notFulfilledTask, showFulfilledTasks, showAllTasks, showUnfinishedTasks] = useToDoStore((state) => [
     state.tasks,
     state.createTask,
     state.removeTask,
@@ -15,10 +15,7 @@ export const App: React.FC = () => {
     state.showFulfilledTasks,
     state.showAllTasks,
     state.showUnfinishedTasks,
-    state.storeTasks
   ]);
-
-  console.log(tasks, storeTasks);
 
   return (
     <article className={styles.article}>
@@ -26,6 +23,7 @@ export const App: React.FC = () => {
       <section className={styles.articleSection}>
         <InputAdd onAdd={(title) => {
           if (title) {
+
             return createTask(title);
           }
         }} />
@@ -49,7 +47,11 @@ export const App: React.FC = () => {
       </section>
       <section>
         {!!tasks.length && (
-          <ShowTasks showUnfinishedTasks={showUnfinishedTasks} showFulfilledTasks={showFulfilledTasks} showAllTasks={showAllTasks}/>
+          <ShowTasks
+            showUnfinishedTasks={showUnfinishedTasks}
+            showFulfilledTasks={showFulfilledTasks}
+            showAllTasks={showAllTasks}
+          />
         )}
       </section>
     </article>

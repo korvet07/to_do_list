@@ -7,7 +7,6 @@ export const InputAdd: React.FC<IInputAddProps> = ({ onAdd }) => {
   const addNewTask = () => {
     onAdd(inputValue);
     setInputValue('');
-    console.log(inputValue);
   };
 
   return (

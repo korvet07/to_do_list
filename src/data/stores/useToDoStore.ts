@@ -91,23 +91,20 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
   showFulfilledTasks: () => {
     const { storeTasks } = get();
     set({
-
       tasks: storeTasks.slice().filter((task) => task.isDone).length ? storeTasks.slice().filter((task) => task.isDone) :
-      [...storeTasks]
+        [...storeTasks]
     })
   },
   showUnfinishedTasks: () => {
     const { storeTasks } = get();
     set({
-
       tasks: storeTasks.slice().filter((task) => !task.isDone).length ? storeTasks.slice().filter((task) => !task.isDone) :
-      [...storeTasks]
+        [...storeTasks]
     })
   },
   showAllTasks: () => {
     const { storeTasks } = get();
     set({
-
       tasks: [...storeTasks]
     })
   }
