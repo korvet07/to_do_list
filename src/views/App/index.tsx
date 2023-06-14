@@ -30,9 +30,10 @@ export const App: React.FC = () => {
       </section>
       <section className={styles.articleSection}>
         {!tasks.length && (
-          <p className={styles.articleText}>There is no one task.</p>
+          <h2 className={styles.articleText}>There is no one task.</h2>
         )}
-        {tasks.map((task) => (
+
+        {(tasks.length !== 1 || tasks[0].id !== '0') && tasks.map((task) => (
           <InputTask
             key={task.id}
             id={task.id}
@@ -44,6 +45,10 @@ export const App: React.FC = () => {
             onNotDone={notFulfilledTask}
           />
         ))}
+
+        {(tasks.length === 1 && tasks[0].id === '0') && (
+          <h2>No tasks to show</h2>
+        )}
       </section>
       <section>
         {!!tasks.length && (

@@ -27,6 +27,13 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
       isDone: false
     }
   ],
+  noTasks: [
+    {
+      id: '0',
+      title: 'Не задача',
+      isDone: false
+    }
+  ],
   createTask: (title) => {
     const { tasks } = get();
     const newTask: ITask = {
@@ -34,6 +41,7 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
       title,
       isDone: false
     };
+
     set({
       tasks: [newTask].concat(tasks),
       copyTasks: [...[newTask].concat(tasks)],
@@ -42,6 +50,7 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
   },
   updateTask: (id, title) => {
     const { tasks } = get();
+
     set({
       tasks: tasks.map((task) => ({
         ...task,
@@ -55,6 +64,7 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
   },
   removeTask: (id) => {
     const { tasks } = get();
+
     set({
       tasks: tasks.filter((task) => task.id !== id),
       copyTasks: [...tasks.filter((task) => task.id !== id)],
@@ -62,13 +72,14 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
   },
   fulfillTask: (id) => {
     const { tasks } = get();
-    const { copyTasks: storeTasks } = get();
+    const { copyTasks } = get();
+
     set({
       tasks: tasks.map((task) => ({
         ...task,
         isDone: task.id === id ? true : task.isDone
       })),
-      copyTasks: [...storeTasks.map((task) => ({
+      copyTasks: [...copyTasks.map((task) => ({
         ...task,
         isDone: task.id === id ? true : task.isDone
       }))],
@@ -76,36 +87,42 @@ export const useToDoStore = create<IToDoStore>((set, get) => ({
   },
   notFulfilledTask: (id) => {
     const { tasks } = get();
-    const { copyTasks: storeTasks } = get();
+    const { copyTasks } = get();
+
     set({
       tasks: tasks.map((task) => ({
         ...task,
         isDone: task.id === id ? false : task.isDone
       })),
-      copyTasks: [...storeTasks.map((task) => ({
+      copyTasks: [...copyTasks.map((task) => ({
         ...task,
         isDone: task.id === id ? false : task.isDone
       }))],
     })
   },
   showFulfilledTasks: () => {
-    const { copyTasks: storeTasks } = get();
+    const { copyTasks } = get();
+    const { noTasks } = get();
+
     set({
-      tasks: storeTasks.slice().filter((task) => task.isDone).length ? storeTasks.slice().filter((task) => task.isDone) :
-        [...storeTasks]
+      tasks: copyTasks.slice().filter((task) => task.isDone).length ? copyTasks.slice().filter((task) => task.isDone) :
+        [...noTasks]
     })
   },
   showUnfinishedTasks: () => {
-    const { copyTasks: storeTasks } = get();
+    const { copyTasks } = get();
+    const { noTasks } = get();
+
     set({
-      tasks: storeTasks.slice().filter((task) => !task.isDone).length ? storeTasks.slice().filter((task) => !task.isDone) :
-        [...storeTasks]
+      tasks: copyTasks.slice().filter((task) => !task.isDone).length ? copyTasks.slice().filter((task) => !task.isDone) :
+        [...noTasks]
     })
   },
   showAllTasks: () => {
-    const { copyTasks: storeTasks } = get();
+    const { copyTasks } = get();
+
     set({
-      tasks: [...storeTasks]
+      tasks: [...copyTasks]
     })
   }
-}))
+}));

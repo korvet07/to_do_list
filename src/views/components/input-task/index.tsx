@@ -17,14 +17,14 @@ export const InputTask: React.FC<IInputTaskProps> = ({ id, title, checked, onDon
   const editTitleInputRef = useRef<HTMLInputElement>(null);
   const editTask = () => {
     onEdited(id, value);
-    setIsEditMode(false);
+    return setIsEditMode(!isEditMode);
   };
 
   useEffect(() => {
     if (isEditMode) {
       editTitleInputRef?.current?.focus();
     }
-  }, [isEditMode, checked]);
+  }, [isEditMode]);
 
   return (
     <div className={styles.inputTask}>
@@ -48,7 +48,7 @@ export const InputTask: React.FC<IInputTaskProps> = ({ id, title, checked, onDon
             value={value}
             className={styles.inputTaskEditTitle}
             onChange={(evt) => setValue(evt.target.value)}
-            onBlur={editTask}
+            onBlur={() => onEdited(id, value)}
             onKeyDown={(evt) => {
               if (evt.key === 'Enter') {
                 editTask();
@@ -61,19 +61,22 @@ export const InputTask: React.FC<IInputTaskProps> = ({ id, title, checked, onDon
       </label>
       {isEditMode ? (
         <button
+          type="button"
           aria-label="Save"
           className={styles.inputTaskSave}
-          onClick={editTask}
+          onClick={() => setIsEditMode(!isEditMode)}
         />
       ) : (
         <button
+          type="button"
           aria-label="Edit"
           disabled={checked}
           className={styles.inputTaskEdit}
-          onClick={() => setIsEditMode(true)}
+          onClick={() => setIsEditMode(!isEditMode)}
         />
       )}
       <button
+        type="button"
         aria-label="Remove"
         className={styles.inputTaskRemove}
         onClick={() => {
